@@ -22,6 +22,8 @@ initial_users = [
 def test_load_users():
     for user in initial_users:
         requests.post(f'http://localhost:5000/user/{user["name"]}', data = user)
+    r = requests.get('http://localhost:5000/user')
+    assert sorted(user['name'] for user in r.json()) == sorted(user['name'] for user in initial_users)
 
 def test_get():
     r = requests.get('http://localhost:5000/user/Jass')
