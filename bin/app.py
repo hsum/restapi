@@ -21,6 +21,7 @@ users = [
         "occupation": "Web Developer"
     }
 ]
+users = []
 
 class User(Resource):
     def get(self, name=None):

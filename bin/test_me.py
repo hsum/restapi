@@ -1,14 +1,36 @@
 import requests
 import pytest
-#from flask import Flask
-#
-#@pytest.fixture
-#def bringup_server():
-#    app = Flask(__name__)
-#    app.run(debug=True)
 
+initial_users = [
+    {
+        "name": "Nicholas",
+        "age": 42,
+        "occupation": "Network Engineer"
+    },
+    {
+        "name": "Elvin",
+        "age": 32,
+        "occupation": "Doctor"
+    },
+    {
+        "name": "Jass",
+        "age": 22,
+        "occupation": "Web Developer"
+    }
+]
 
-# this presumes initial state
+def test_load_users():
+    for user in initial_users:
+        requests.post(f'http://localhost:5000/user/{user["name"]}', data = user)
+
+def test_get():
+    r = requests.get('http://localhost:5000/user/Jass')
+    assert r.json() == {
+        "name": "Jass",
+        "age": "22",
+        "occupation": "Web Developer"
+    }
+
 def test_insert():
     r = requests.post('http://localhost:5000/user/Howard', data = {'age':20, 'occupation':'climber'})
     assert r.json() == {
@@ -22,7 +44,7 @@ def test_insert_duplicate():
     r = requests.post('http://localhost:5000/user/Howard', data = {'age':20, 'occupation':'climber'})
     assert r.status_code == 400
 
-
-#if __name__ == '__main__':
-#    print(test_insert())
+def test_delete():
+    r = requests.delete('http://localhost:5000/user/Howard')
+    assert r.status_code == 200
 
