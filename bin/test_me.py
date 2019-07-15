@@ -28,11 +28,7 @@ def test_load_users():
 
 def test_get():
     r = requests.get('http://localhost:5000/user/Jass')
-    assert r.json() == {
-        "name": "Jass",
-        "age": "22",
-        "occupation": "Web Developer"
-    }
+    assert r.json().get('name') == "Jass"
 
 
 def test_insert():
