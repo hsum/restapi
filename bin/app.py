@@ -4,23 +4,6 @@ from flask_restful import Api, Resource, reqparse
 app = Flask(__name__)
 api = Api(app)
 
-users = [
-    {
-        "name": "Nicholas",
-        "age": 42,
-        "occupation": "Network Engineer"
-    },
-    {
-        "name": "Elvin",
-        "age": 32,
-        "occupation": "Doctor"
-    },
-    {
-        "name": "Jass",
-        "age": 22,
-        "occupation": "Web Developer"
-    }
-]
 users = []
 
 class User(Resource):
@@ -34,7 +17,7 @@ class User(Resource):
 
     def post(self, name):
         parser = reqparse.RequestParser()
-        parser.add_argument("age")
+        parser.add_argument("age", type=int)
         parser.add_argument("occupation")
         args = parser.parse_args()
 
